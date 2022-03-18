@@ -1,0 +1,8 @@
+- for i in 1..@pagecount do
+  .container
+    = link_to i.to_s, '#'+i.to_s
+
+- @posts = Post.limit(6).offset(1)
+.container.h-100
+  - @posts.each do |p|
+    = render "pages/posts", post: p

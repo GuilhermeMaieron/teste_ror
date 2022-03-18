@@ -1,0 +1,16 @@
+= form_for @post do |p|
+  .p
+    = p.label :Titulo
+    = p.text_field :titulo
+
+  .p
+    = p.label :foto
+    = p.file_field :foto
+
+  .p
+    =p.label :autores
+    .br
+    =p.select :user_ids, User.all.pluck(:email, :id),{},{multiple: true}
+
+  .p
+    = p.submit

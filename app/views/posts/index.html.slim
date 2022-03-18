@@ -1,0 +1,34 @@
+.container.h-100.w-100
+  - @posts.each do |post|
+    = render post
+
+
+.card.w-100.shadow
+  .card-header
+    - last_page = @total_pages
+
+    - if @total_pages > 5
+      - @total_pages = 5
+
+    - if @page != 1
+      a.btn.btn-primary href="#{page_posts_path(1)}" role="button" style="margin:10px"
+        | #{1}
+    - else
+      a.btn.btn-primary.disabled href="#{page_posts_path(1)}" role="button" style="margin:10px"
+        | #{1}
+
+    - for i in @page-1..@page+1 do
+      - if i > 1 && i < last_page
+        - if i == @page
+          a.btn.btn-primary.disabled.shadow href="#{ page_posts_path(i)}" role="button" style="margin:10px"
+            | #{i}
+        - else
+          a.btn.btn-primary href="#{page_posts_path(i)}" role="button" style="margin:10px"
+            | #{i}
+
+    - if last_page != @page
+      a.btn.btn-primary href="#{page_posts_path(last_page)}" role="button" style="margin:10px"
+        | #{last_page}
+    - else
+      a.btn.btn-primary.disabled href="#{page_posts_path(last_page)}" role="button" style="margin:10px"
+        | #{last_page}

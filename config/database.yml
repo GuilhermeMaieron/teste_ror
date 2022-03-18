@@ -1,0 +1,18 @@
+
+default: &default
+  user: postgres
+  adapter: postgresql
+  pool: 5
+  timeout: 5000
+
+development:
+  <<: *default
+  database: teste_ror_development
+
+test:
+  <<: *default
+  database: teste_ror_test
+
+production:
+  <<: *default
+  database: teste_ror_production

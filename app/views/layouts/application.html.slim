@@ -1,0 +1,32 @@
+doctype html
+html
+  head
+    meta content=("text/html; charset=UTF-8") http-equiv="Content-Type" /
+    title TesteRor
+    = stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track' => true
+    = javascript_include_tag 'application', 'data-turbolinks-track' => true
+    = csrf_meta_tags
+  body
+  .position-fixed.vh-100.navbar-dark.bg-dark.border.shadow style="width:82px;"
+    .w-100.text-center
+      a.navbar-brand href="#{root_path}"
+        = image_tag 'thew.jpg',class:"logo"
+        p.text-wrap.fs-6
+          | TesteRoR
+    a.btn.btn-primary.position-absolute.bottom-15.w-100 href="#{new_post_path}" role="button"
+      | Novo Post
+
+    a.btn.btn-primary.position-absolute.bottom-0.w-100 href="#{new_user_registration_path}" role="button"
+      | Sing up/in
+
+  .container.w-75.bg-light.shadow.text-center.h-100
+
+    -if notice
+      .alert.alert-success role="alert"
+        | #{notice}
+    -if alert
+      .alert.alert-danger role="alert"
+        | #{alert}
+
+    .container.justify-content-center
+      =yield
