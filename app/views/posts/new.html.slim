@@ -13,4 +13,9 @@
     =p.select :user_ids, User.all.pluck(:email, :id),{},{multiple: true}
 
   .p
+    = p.fields_for :tags do |tag_attributes|
+      =tag_attributes.label :classificacao
+      =tag_attributes.text_field :nome
+
+  .p
     = p.submit

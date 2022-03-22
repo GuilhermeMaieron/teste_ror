@@ -1,24 +1,30 @@
 .card.w-100.shadow style="margin: 0px 0px 30px 0px; min-height: 720px"
   .card-header.fs-2.fw-bold
+    | Titulo:
+    .br
     = @post.titulo
   .div
     = image_tag @post.foto, class:"shadow"
   .card-header.fs-3
     |Feito por:
     .br
-    - @post.user_ids.each do |i|
+    - @post.users.each do |p|
       .br
-      = User.find(i).email
+      = p.email
     .br
     |Criado em: #{@post.created_at.strftime("%d %B, %Y")}
-
-
-
+    .br
+    |Tags:
+    - @post.tags.each do |tag|
+      = tag.nome
 
   .card-header.fs-3.shadow id="post-div" data-url="#{post_likes_path(@post)}"
     span#likes-div
      = @post.likes
 
     = form_for(@post, remote: true) do |p|
-      = p.hidden_field :likes, :value => 2
-      = p.submit
+      = p.hidden_field :likes, :value => 1
+      = p.submit 'like :D'
+    = form_for(@post, remote: true) do |p|
+      = p.hidden_field :likes, :value => -1
+      = p.submit 'dislike >:('

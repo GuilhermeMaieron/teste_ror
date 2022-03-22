@@ -1,9 +1,10 @@
 class PostsController < ApplicationController
 
-  before_action :authenticate_user!
   skip_before_action :authenticate_user!, only:[:index]
+
   def new
     @post = Post.new()
+    @post.tags.build
   end
 
   def create
@@ -16,38 +17,31 @@ class PostsController < ApplicationController
   end
 
   def index
-    @page = params[:page] ? params[:page].to_i : 1
-    @per_page = 4
-    @count = Post.count()
-    if @count % @per_page == 0
-      @total_pages = @count/@per_page
-    else
-      @total_pages = @count/@per_page+1
-    end
-    @page = 1 if @page - 1 <= 0
-    @posts = Post.order(created_at: :desc).limit(@per_page).offset((@page - 1) * @per_page)
+    @total_pages = Lista.numero_paginas()
+    @page = Lista.pg_n(params[:page])
+    @posts = Lista.page_posts(@page).includes(:post_users, :users)
   end
 
   def show
-    @post = Post.find(params[:id])
+    @post = Post.includes(:post_users, :users).find(params[:id])
   end
 
   def update
     @post = Post.find(params[:id])
-    @post.update(post_params)
+    @post.update(likes: @post.likes + post_params["likes"].to_i)
     render 'show'
   end
 
   def likes
-    @post = Post.find(params[:post_id])
+    @post = Post.includes(:post_users, :users).find(params[:post_id])
     @likes = @post.likes
     render json: @likes.to_json
   end
 
-  private
 
+  private
     def post_params
-      params.require(:post).permit(:titulo, :foto,:likes,  user_ids:[])
+      params.require(:post).permit(:titulo, :foto,:likes, tags_attributes:[:id, :nome] ,user_ids:[])
     end
 
 end

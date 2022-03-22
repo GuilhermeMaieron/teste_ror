@@ -1,4 +1,4 @@
-var update_likes = setInterval(atualiza_likes, 4000);
+var update_likes = setInterval(atualiza_likes, 5000);
 
 function atualiza_likes() {
   var like_div = document.getElementById("likes-div");
