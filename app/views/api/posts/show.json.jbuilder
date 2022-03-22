@@ -4,7 +4,9 @@ json.data do
       @post,
       :titulo,
       :id,
-      :user_ids
+      :user_ids,
+      :likes,
+      :foto
     )
   end
 end
